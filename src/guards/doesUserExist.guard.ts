@@ -19,9 +19,11 @@ export class DoesUserExist implements CanActivate {
         },
       ]);
     }
+
     const userExistByUsername = await this.userService.findOneByUsername(
       req.username,
     );
+
     if (userExistByUsername) {
       throw new ArgumentValidationError([
         {
@@ -32,6 +34,7 @@ export class DoesUserExist implements CanActivate {
         },
       ]);
     }
+
     return true;
   }
 

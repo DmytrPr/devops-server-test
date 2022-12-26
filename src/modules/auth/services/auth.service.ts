@@ -29,15 +29,15 @@ export class AuthService {
     return result;
   }
 
-  public async login(user) {
-    const actualUser = await this.validateUser(user.username, user.password);
-    return actualUser;
+  public login(user) {
+    return this.validateUser(user.username, user.password);
   }
 
   public async create(user) {
     const pass = await this.hashPassword(user.password);
     const newUser = await this.userService.create({ ...user, password: pass });
     const { password, ...result } = newUser;
+
     return result;
   }
 

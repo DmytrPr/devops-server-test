@@ -38,15 +38,13 @@ export class UserService {
     });
   }
 
-  async create(user: User): Promise<User | null> {
+  create(user: User): Promise<User | null> {
     return this.prismaService.user.create({
       data: user,
     });
   }
 
-  async update(
-    newUser: Partial<User> & Pick<User, 'id'>,
-  ): Promise<User | null> {
+  update(newUser: Partial<User> & Pick<User, 'id'>): Promise<User | null> {
     return this.prismaService.user.update({
       data: newUser,
       where: {

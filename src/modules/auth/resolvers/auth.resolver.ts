@@ -21,7 +21,7 @@ export class AuthResolver {
 
   @Mutation(() => UserEntity)
   @UseGuards(DoesUserExist)
-  async register(
+  register(
     @Args('options') options: UserRegDTO,
   ): Promise<Omit<User, 'password'>> {
     return this.authService.create(options);
@@ -29,10 +29,10 @@ export class AuthResolver {
 
   @Mutation(() => UserEntity)
   @UseGuards(LoginGuard)
-  async login(
+  login(
     @Args('options') options: UserLoginDTO,
     @Context() ctx: SessionContext,
-  ): Promise<Omit<User, 'password'>> {
+  ): Omit<User, 'password'> {
     return ctx.req.user as Omit<User, 'password'>;
   }
 
@@ -52,7 +52,6 @@ export class AuthResolver {
 
   @Query(() => UserEntity, { nullable: true })
   me(@Context() ctx: SessionContext) {
-    console.log(ctx.req.user);
     const usr = ctx.req.user as User;
     if (!usr) {
       return null;
