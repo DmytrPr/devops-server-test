@@ -5,9 +5,9 @@ import { User } from '@prisma/client';
 import { DoesUserExist } from 'src/guards/doesUserExist.guard';
 import { LoginGuard } from 'src/guards/login.guard';
 import { Environment } from 'src/interfaces/environment.interface';
-import { UserLoginDTO, UserRegDTO } from 'src/modules/user/dto/user.dto';
+import { UserLoginDTO, UserRegDTO } from 'src/modules/user/dto/user-auth.dto';
 import { User as UserEntity } from 'src/modules/user/entities/user.entity';
-import { UserService } from 'src/modules/user/user.service';
+import { UserService } from 'src/modules/user/services/user.service';
 import { SessionContext } from 'src/types';
 import { AuthService } from '../services/auth.service';
 

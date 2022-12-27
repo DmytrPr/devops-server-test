@@ -1,6 +1,6 @@
 import * as argon from 'argon2';
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/modules/user/user.service';
+import { UserService } from 'src/modules/user/services/user.service';
 import { User } from '@prisma/client';
 
 @Injectable()

@@ -9,6 +9,11 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { PROD } from './constants';
 import { AuthModule } from './modules/auth/auth.module';
 import { redis } from './modules/redis';
+import { PortfolioModule } from './modules/portfolio/portfolio.module';
+import { UserModule } from './modules/user/user.module';
+import { ForumCategoryModule } from './modules/forum-topic/forum-category.module';
+import { TopicModule } from './modules/topic/topic.module';
+import { PostModule } from './modules/post/post.module';
 
 @Module({
   imports: [
@@ -48,6 +53,11 @@ import { redis } from './modules/redis';
       }),
     }),
     AuthModule,
+    PortfolioModule,
+    UserModule,
+    ForumCategoryModule,
+    TopicModule,
+    PostModule,
   ],
   controllers: [],
   providers: [],

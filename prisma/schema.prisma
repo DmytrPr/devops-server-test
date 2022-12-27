@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now())
-  email     String      @unique
-  username  String      @unique
-  password  String
-  Topic     Topic[]
-  Post      Post[]
-  postId    Int?
-  Portfolio Portfolio[]
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  email      String      @unique
+  username   String      @unique
+  password   String
+  topics     Topic[]
+  posts      Post[]
+  postId     Int?
+  portfolios Portfolio[]
 }
 
 model ForumCategory {
@@ -24,7 +24,7 @@ model ForumCategory {
   createdAt DateTime @default(now())
   title     String
   subTitle  String?
-  Topic     Topic[]
+  topics    Topic[]
 }
 
 model Topic {
@@ -35,7 +35,7 @@ model Topic {
   categoryId    Int
   user          User          @relation(fields: [userId], references: [id])
   userId        Int
-  Post          Post[]
+  posts         Post[]
 }
 
 model Post {
@@ -47,7 +47,7 @@ model Post {
   topic     Topic    @relation(fields: [topicId], references: [id])
   topicId   Int
   parent    Post?    @relation("ParentChildren", fields: [parentId], references: [id])
-  parentId  Int
+  parentId  Int?
   children  Post[]   @relation("ParentChildren")
 }
 

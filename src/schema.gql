@@ -7,6 +7,7 @@ type User {
   createdAt: DateTime!
   email: String!
   username: String!
+  portfolios: [Portfolio!]!
 }
 
 """
@@ -14,14 +15,67 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Portfolio {
+  id: Int!
+  createdAt: DateTime!
+  title: String!
+  company: String!
+  description: String!
+  startDate: DateTime!
+  endDate: DateTime
+  user: User!
+}
+
+type ForumCategory {
+  id: Int!
+  createdAt: DateTime!
+  title: String!
+  subTitle: String
+  topics: [Topic!]!
+}
+
+type Post {
+  id: Int!
+  createdAt: DateTime!
+  content: String!
+  user: User!
+  topic: Topic!
+  parentId: Int
+  parent: Post!
+  children: [Post!]!
+}
+
+type Topic {
+  id: Int!
+  createdAt: DateTime!
+  content: String!
+  user: User!
+  forumCategory: ForumCategory!
+  posts: [Post!]!
+}
+
 type Query {
   me: User
+  users: [User!]!
+  user(id: Int!): User!
+  portfolios: [Portfolio!]!
+  portfolio(id: Int!): Portfolio!
+  forumCategories: [ForumCategory!]!
+  forumCategory(id: Int!): ForumCategory!
+  topics: [Topic!]!
+  topic(id: Int!): Topic!
+  posts: [Post!]!
+  post(id: Int!): Post!
 }
 
 type Mutation {
   register(options: UserRegDTO!): User!
   login(options: UserLoginDTO!): User!
   logout: Boolean!
+  createPortfolio(options: CreatePortfolioDTO!): Portfolio!
+  createForumCategory(options: CreateCategoryDTO!): ForumCategory!
+  createTopic(options: CreateTopicDTO!): Topic!
+  createPost(options: CreatePostDTO!): Post!
 }
 
 input UserRegDTO {
@@ -33,4 +87,28 @@ input UserRegDTO {
 input UserLoginDTO {
   username: String!
   password: String!
+}
+
+input CreatePortfolioDTO {
+  title: String!
+  company: String!
+  description: String!
+  startDate: String!
+  endDate: String
+}
+
+input CreateCategoryDTO {
+  title: String!
+  subTitle: String!
+}
+
+input CreateTopicDTO {
+  content: String!
+  categoryId: Float!
+}
+
+input CreatePostDTO {
+  content: String!
+  topicId: Float!
+  parentId: Float
 }
