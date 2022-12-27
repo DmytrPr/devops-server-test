@@ -41,7 +41,7 @@ type Post {
   user: User!
   topic: Topic!
   parentId: Int
-  parent: Post!
+  parent: Post
   children: [Post!]!
 }
 

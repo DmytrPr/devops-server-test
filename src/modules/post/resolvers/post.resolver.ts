@@ -48,11 +48,16 @@ export class PostResolver {
   }
 
   @ResolveField('parent', () => Post)
-  portfolios(@Parent() post: Post) {
+  parent(@Parent() post: Post) {
     if (!post.parentId) {
       return null;
     }
 
     return this.postService.findOneById(post.parentId);
+  }
+
+  @ResolveField('children', () => Post)
+  children(@Parent() post: Post) {
+    return this.postService.findChildren(post.id);
   }
 }

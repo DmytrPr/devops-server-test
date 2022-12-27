@@ -29,6 +29,14 @@ export class PostService {
     });
   }
 
+  findChildren(id: Post['id']): Promise<Post[]> {
+    return this.prismaService.post.findMany({
+      where: {
+        parentId: id,
+      },
+    });
+  }
+
   createPost(data: CreatePostDTO, userId: User['id']): Promise<Post> {
     const { topicId, parentId, ...rest } = data;
 
