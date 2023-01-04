@@ -73,9 +73,12 @@ type Mutation {
   login(options: UserLoginDTO!): User!
   logout: Boolean!
   createPortfolio(options: CreatePortfolioDTO!): Portfolio!
+  updatePortfolio(options: EditPortfolioDTO!): Portfolio!
   createForumCategory(options: CreateCategoryDTO!): ForumCategory!
   createTopic(options: CreateTopicDTO!): Topic!
+  updateTopic(options: EditTopicDTO!): Topic!
   createPost(options: CreatePostDTO!): Post!
+  updatePost(options: EditPostDTO!): Post!
 }
 
 input UserRegDTO {
@@ -97,6 +100,10 @@ input CreatePortfolioDTO {
   endDate: String
 }
 
+input EditPortfolioDTO {
+  id: Float!
+}
+
 input CreateCategoryDTO {
   title: String!
   subTitle: String!
@@ -104,11 +111,19 @@ input CreateCategoryDTO {
 
 input CreateTopicDTO {
   content: String!
-  categoryId: Float!
+  categoryId: Int!
+}
+
+input EditTopicDTO {
+  id: Float!
 }
 
 input CreatePostDTO {
   content: String!
-  topicId: Float!
-  parentId: Float
+  topicId: Int!
+  parentId: Int
+}
+
+input EditPostDTO {
+  id: Float!
 }

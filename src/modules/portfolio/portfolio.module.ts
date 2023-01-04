@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from '../database/services/prisma.service';
-import { PortfolioResolver } from './portfolio.resolver';
+import { PortfolioResolver } from './resolvers/portfolio.resolver';
 import { PortfolioService } from './services/portfolio.service';
 
 @Module({

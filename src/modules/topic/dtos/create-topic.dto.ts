@@ -1,5 +1,5 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsString, MaxLength, IsOptional, IsNumber } from 'class-validator';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { IsString, MaxLength, IsOptional, IsInt } from 'class-validator';
 
 @InputType()
 export class CreateTopicDTO {
@@ -9,7 +9,7 @@ export class CreateTopicDTO {
   @MaxLength(64)
   content: string;
 
-  @Field()
-  @IsNumber()
+  @Field(() => Int)
+  @IsInt()
   categoryId: number;
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common/decorators';
 import { ForumCategory, Topic, User } from '@prisma/client';
 import { PrismaService } from 'src/modules/database/services/prisma.service';
 import { CreateTopicDTO } from '../dtos/create-topic.dto';
+import { EditTopicDTO } from '../dtos/edit-topic.dto';
 
 @Injectable()
 export class TopicService {
@@ -41,6 +42,27 @@ export class TopicService {
         },
         ...rest,
       },
+    });
+  }
+
+  async editTopic(data: EditTopicDTO, userId: User['id']): Promise<Topic> {
+    const { id, ...rest } = data;
+
+    const topic = await this.prismaService.topic.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (topic.userId !== userId) {
+      return null;
+    }
+
+    return this.prismaService.topic.update({
+      where: {
+        id,
+      },
+      data: rest,
     });
   }
 

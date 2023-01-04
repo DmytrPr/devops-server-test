@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common/decorators';
 import { Post, Topic, User } from '@prisma/client';
 import { PrismaService } from 'src/modules/database/services/prisma.service';
 import { CreatePostDTO } from '../dtos/create-post.dto';
+import { EditPostDTO } from '../dtos/edit-post.dto';
 
 @Injectable()
 export class PostService {
@@ -62,5 +63,39 @@ export class PostService {
         ...rest,
       },
     });
+  }
+
+  async editPost(data: EditPostDTO, userId: User['id']): Promise<Post> {
+    const { id, ...rest } = data;
+
+    const post = await this.prismaService.post.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (post.userId !== userId) {
+      return null;
+    }
+
+    return this.prismaService.post.update({
+      where: {
+        id,
+      },
+      data: rest,
+    });
+  }
+
+  async findPostAuthor(id: Post['id']): Promise<User> {
+    return (
+      await this.prismaService.post.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          user: true,
+        },
+      })
+    ).user;
   }
 }

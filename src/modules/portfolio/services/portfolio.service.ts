@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Portfolio, User } from '@prisma/client';
 import { PrismaService } from 'src/modules/database/services/prisma.service';
 import { CreatePortfolioDTO } from '../dtos/create-portfolio.dto';
+import { EditPortfolioDTO } from '../dtos/edit-portfolio.dto';
 
 @Injectable()
 export class PortfolioService {
@@ -44,6 +45,30 @@ export class PortfolioService {
           },
         },
       },
+    });
+  }
+
+  async editPortfolio(
+    data: EditPortfolioDTO,
+    userId: User['id'],
+  ): Promise<Portfolio> {
+    const { id, ...rest } = data;
+
+    const portfolio = await this.prismaService.portfolio.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (portfolio.userId !== userId) {
+      return null;
+    }
+
+    return this.prismaService.portfolio.update({
+      where: {
+        id,
+      },
+      data: rest,
     });
   }
 }

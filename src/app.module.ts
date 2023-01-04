@@ -23,10 +23,6 @@ import { PostModule } from './modules/post/post.module';
       debug: !PROD,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       formatError: (error: GraphQLError): GraphQLFormattedError => {
-        if (error.originalError instanceof ApolloError) {
-          return error;
-        }
-
         if (error.originalError instanceof ArgumentValidationError) {
           const { extensions, locations, message, path } = error;
 
@@ -43,7 +39,7 @@ import { PostModule } from './modules/post/post.module';
         return error;
       },
       cors: {
-        origin: 'http://localhost:4000',
+        origin: 'http://localhost:3000',
         credentials: true,
       },
       context: ({ req, res }) => ({

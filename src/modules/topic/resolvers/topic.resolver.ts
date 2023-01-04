@@ -1,4 +1,4 @@
-import { Post, UseGuards } from '@nestjs/common';
+import { NotFoundException, Post, UseGuards } from '@nestjs/common';
 import {
   Args,
   Context,
@@ -14,6 +14,7 @@ import { AuthenticatedGuard } from 'src/guards/authenticated.guard';
 import { PostService } from 'src/modules/post/services/post.service';
 import { SessionContext } from 'src/types';
 import { CreateTopicDTO } from '../dtos/create-topic.dto';
+import { EditTopicDTO } from '../dtos/edit-topic.dto';
 import { Topic } from '../entities/topic.entity';
 import { TopicService } from '../services/topic.service';
 
@@ -49,6 +50,24 @@ export class TopicResolver {
       options,
       (ctx.req.user as Pick<User, 'id'>).id,
     );
+  }
+
+  @Mutation(() => Topic)
+  @UseGuards(AuthenticatedGuard)
+  async updateTopic(
+    @Args('options') options: EditTopicDTO,
+    @Context() ctx: SessionContext,
+  ) {
+    const topic = await this.topicService.editTopic(
+      options,
+      (ctx.req.user as Pick<User, 'id'>).id,
+    );
+
+    if (!topic) {
+      throw new NotFoundException();
+    }
+
+    return topic;
   }
 
   @ResolveField('posts', () => [Post])

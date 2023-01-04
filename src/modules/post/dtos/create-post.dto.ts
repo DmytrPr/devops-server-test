@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsString, MaxLength, IsOptional, IsNumber } from 'class-validator';
 
 @InputType()
@@ -9,11 +9,11 @@ export class CreatePostDTO {
   @MaxLength(512)
   content: string;
 
-  @Field()
+  @Field(() => Int)
   @IsNumber()
   topicId: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   @IsOptional()
   @IsNumber()
   parentId: number;
