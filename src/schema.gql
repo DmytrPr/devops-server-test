@@ -55,7 +55,6 @@ type Topic {
 }
 
 type Query {
-  me: User
   users: [User!]!
   user(id: Int!): User!
   portfolios: [Portfolio!]!
@@ -69,9 +68,6 @@ type Query {
 }
 
 type Mutation {
-  register(options: UserRegDTO!): User!
-  login(options: UserLoginDTO!): User!
-  logout: Boolean!
   createPortfolio(options: CreatePortfolioDTO!): Portfolio!
   updatePortfolio(options: EditPortfolioDTO!): Portfolio!
   createForumCategory(options: CreateCategoryDTO!): ForumCategory!
@@ -79,17 +75,6 @@ type Mutation {
   updateTopic(options: EditTopicDTO!): Topic!
   createPost(options: CreatePostDTO!): Post!
   updatePost(options: EditPostDTO!): Post!
-}
-
-input UserRegDTO {
-  username: String!
-  password: String!
-  email: String!
-}
-
-input UserLoginDTO {
-  username: String!
-  password: String!
 }
 
 input CreatePortfolioDTO {
