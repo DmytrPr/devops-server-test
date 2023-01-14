@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:up": "cd ./.docker && docker-compose up",
     "docker:db:exec": "sudo docker exec -it csa-db /bin/bash",
-    "prisma:push": "dotenv -e .env -- npx prisma db push",
+    "prisma:push": "npx prisma db push",
     "prisma:generate": "npx prisma generate",
     "prisma:introspect": "dotenv -e ./config/.env.development -- npx prisma introspect"
   },
